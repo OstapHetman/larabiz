@@ -19,8 +19,14 @@
                             @foreach ($userListings as $listing)
                                 <tr>
                                     <td>{{ $listing->name }}</td>
-                                    <td></td>
-                                    <td></td>
+                                    <td class="text-right" ><a class="btn btn-light " href="/listings/{{ $listing->id }}/edit">Edit</a></td>
+                                    <td>
+                                        <form action="{{ action('ListingsController@destroy', ['id' => $listing->id]) }}" method="POST">
+                                            @method('DELETE')
+                                            @csrf
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
                                 </tr>
                             @endforeach
                         </table>
