@@ -6,7 +6,10 @@ use App\Listing;
 use Illuminate\Http\Request;
 
 class ListingsController extends Controller
-{
+{   
+    public function __construct() {
+        $this->middleware('auth', [ 'except' => ['index', 'show'] ]);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +17,9 @@ class ListingsController extends Controller
      */
     public function index()
     {
-        //
+        $listings = Listing::orderBy('created_at', 'DESC')->get();
+
+        return view('listings.index')->with('listings', $listings);
     }
 
     /**
@@ -63,7 +68,8 @@ class ListingsController extends Controller
      */
     public function show($id)
     {
-        //
+        $listing = Listing::find($id);
+        return view('listings.show')->with('listing', $listing);
     }
 
     /**
